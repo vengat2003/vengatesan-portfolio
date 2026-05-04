@@ -174,6 +174,10 @@ footer span{color:var(--cyan)}
   .about-stats{grid-template-columns:1fr 1fr}
   .photo-wrap{width:240px;height:280px}
 }
+
+@keyframes vsSlideIn{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:none}}
+@keyframes vsFadeUp{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.vsahead:hover{filter:brightness(1.2);}
 </style>
 </head>
 <body>
@@ -256,67 +260,210 @@ footer span{color:var(--cyan)}
 </section>
 
 <!-- SKILLS -->
+<!-- SKILL DETAIL MODAL -->
+<div id="skill-modal" style="display:none;position:fixed;inset:0;z-index:2000;align-items:center;justify-content:center;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);" onclick="closeSkillModal(event)">
+  <div style="background:#0a1118;border:1px solid rgba(0,229,255,0.3);border-radius:8px;max-width:640px;width:90%;max-height:85vh;overflow-y:auto;padding:0;position:relative;">
+    <!-- Modal Header -->
+    <div style="padding:24px 28px 16px;border-bottom:1px solid rgba(0,229,255,0.12);display:flex;align-items:center;gap:14px;position:sticky;top:0;background:#0a1118;z-index:10;">
+      <div id="modal-icon" style="font-size:32px;flex-shrink:0;"></div>
+      <div style="flex:1">
+        <div id="modal-title" style="font-size:18px;font-weight:800;color:#fff;margin-bottom:4px;"></div>
+        <div id="modal-level" style="font-size:11px;font-family:Courier New,monospace;color:#00ff88;letter-spacing:.1em;"></div>
+      </div>
+      <button onclick="closeModal()" style="background:none;border:1px solid rgba(255,255,255,0.2);color:#aaa;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">✕</button>
+    </div>
+    <!-- Progress bar in modal -->
+    <div style="padding:0 28px;margin-top:16px;">
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+        <span style="font-family:Courier New,monospace;font-size:11px;color:#7d8590;">Skill Progress</span>
+        <span id="modal-pct" style="font-family:Courier New,monospace;font-size:11px;color:#00e5ff;"></span>
+      </div>
+      <div style="height:4px;background:rgba(255,255,255,0.08);border-radius:99px;overflow:hidden;margin-bottom:20px;">
+        <div id="modal-bar" style="height:100%;background:linear-gradient(90deg,#00e5ff,#00ff88);border-radius:99px;transition:width .6s ease;width:0%"></div>
+      </div>
+    </div>
+    <!-- Topics covered -->
+    <div style="padding:0 28px 20px;" id="modal-body"></div>
+  </div>
+</div>
+
 <section id="skills">
   <div style="width:100%">
     <div class="section-header reveal">
       <div class="section-tag">Technical Skills</div>
       <h2 class="section-title">My <span>Arsenal</span></h2>
       <div class="section-line"></div>
+      <p style="font-size:13px;color:var(--text2);margin-top:10px;">Click any skill card to see what topics I have covered 👇</p>
     </div>
     <div class="skills-grid">
-      <div class="skill-card reveal">
+
+      <div class="skill-card reveal" style="cursor:pointer;" onclick="showSkill(0)">
         <span class="skill-icon">🌐</span>
         <div class="skill-name">Networking Basics</div>
         <div class="skill-level">BEGINNER → INTERMEDIATE</div>
         <div class="skill-bar-track"><div class="skill-bar-fill" data-width="45" style="width:0%"></div></div>
-        <p style="font-size:12px;color:var(--text2);margin-top:10px">LAN, WAN, IP Addressing, Ports, DNS, TCP/IP, OSI Model</p>
+        <p style="font-size:12px;color:var(--text2);margin-top:10px;">LAN, WAN, TCP/IP, OSI Model, IP Addressing</p>
+        <div style="margin-top:10px;font-size:10px;color:#00e5ff;font-family:Courier New,monospace;letter-spacing:.08em;">Click to see full topics →</div>
       </div>
-      <div class="skill-card reveal" style="animation-delay:.1s">
-        <span class="skill-icon">💻</span>
-        <div class="skill-name">Linux Basics</div>
-        <div class="skill-level">LEARNING</div>
-        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="35" style="width:0%"></div></div>
-        <p style="font-size:12px;color:var(--text2);margin-top:10px">Terminal commands, file system, permissions, Kali Linux setup</p>
-      </div>
-      <div class="skill-card reveal" style="animation-delay:.2s">
-        <span class="skill-icon">🔐</span>
-        <div class="skill-name">SQL Injection</div>
-        <div class="skill-level">BEGINNER</div>
-        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="25" style="width:0%"></div></div>
-        <p style="font-size:12px;color:var(--text2);margin-top:10px">Login bypass, basic injection concepts, web attack understanding</p>
-      </div>
-      <div class="skill-card reveal" style="animation-delay:.3s">
-        <span class="skill-icon">🛠</span>
-        <div class="skill-name">Security Tools</div>
-        <div class="skill-level">LEARNING</div>
-        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="20" style="width:0%"></div></div>
-        <p style="font-size:12px;color:var(--text2);margin-top:10px">Kali Linux, Nmap (learning), Burp Suite (learning)</p>
-      </div>
-    
-      <div class="skill-card reveal" style="animation-delay:.4s">
-        <span class="skill-icon">&#128421;</span>
+
+      <div class="skill-card reveal" style="cursor:pointer;animation-delay:.1s" onclick="showSkill(1)">
+        <span class="skill-icon">🖥️</span>
         <div class="skill-name">Hardware & OS</div>
-        <div class="skill-level">HANDS-ON</div>
-        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="55" style="width:55%"></div></div>
-        <div class="skill-desc">PC Assembly, Windows 11, BIOS config, Disk Partitioning, Driver Installation, OS Repair.</div>
+        <div class="skill-level">HANDS-ON ✅</div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="55" style="width:0%"></div></div>
+        <p style="font-size:12px;color:var(--text2);margin-top:10px;">PC Assembly, Windows 11, BIOS, Partitions, OS Repair</p>
+        <div style="margin-top:10px;font-size:10px;color:#00e5ff;font-family:Courier New,monospace;letter-spacing:.08em;">Click to see full topics →</div>
       </div>
-      <div class="skill-card reveal" style="animation-delay:.5s">
+
+      <div class="skill-card reveal" style="cursor:pointer;animation-delay:.2s" onclick="showSkill(2)">
         <span class="skill-icon">🐧</span>
         <div class="skill-name">Linux & Virtualization</div>
-        <div class="skill-level">HANDS-ON</div>
-        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="40" style="width:40%"></div></div>
-        <div class="skill-desc">VMware Workstation, Red Hat Linux 6, Disk Partitions (/, /boot, swap), GRUB repair, Bootable Pendrive, Acronis Backup, Recuva Recovery.</div>
+        <div class="skill-level">HANDS-ON ✅</div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="40" style="width:0%"></div></div>
+        <p style="font-size:12px;color:var(--text2);margin-top:10px;">VMware, Red Hat Linux 6, GRUB, Acronis, Recuva</p>
+        <div style="margin-top:10px;font-size:10px;color:#00e5ff;font-family:Courier New,monospace;letter-spacing:.08em;">Click to see full topics →</div>
       </div>
-      <div class="skill-card reveal" style="animation-delay:.6s">
+
+      <div class="skill-card reveal" style="cursor:pointer;animation-delay:.3s" onclick="showSkill(3)">
         <span class="skill-icon">🖧</span>
-        <div class="skill-name">Windows Server & Active Directory</div>
-        <div class="skill-level">HANDS-ON</div>
-        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="50" style="width:50%"></div></div>
-        <div class="skill-desc">Windows Server 2025, ADDS, Domain Controller, Group Policy, Password & Lockout Policy, Share Permissions, Roaming Profiles, FSRM Quota & File Screening.</div>
+        <div class="skill-name">Windows Server & AD</div>
+        <div class="skill-level">HANDS-ON ✅</div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="50" style="width:0%"></div></div>
+        <p style="font-size:12px;color:var(--text2);margin-top:10px;">ADDS, Domain Controller, GPO, FSRM, Profiles</p>
+        <div style="margin-top:10px;font-size:10px;color:#00e5ff;font-family:Courier New,monospace;letter-spacing:.08em;">Click to see full topics →</div>
       </div>
+
+      <div class="skill-card reveal" style="cursor:pointer;animation-delay:.4s" onclick="showSkill(4)">
+        <span class="skill-icon">🔐</span>
+        <div class="skill-name">Cybersecurity & Pentesting</div>
+        <div class="skill-level">LEARNING</div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="25" style="width:0%"></div></div>
+        <p style="font-size:12px;color:var(--text2);margin-top:10px;">SQL Injection, OWASP, Kali Linux, Nmap, Burp Suite</p>
+        <div style="margin-top:10px;font-size:10px;color:#00e5ff;font-family:Courier New,monospace;letter-spacing:.08em;">Click to see full topics →</div>
+      </div>
+
+      <div class="skill-card reveal" style="cursor:pointer;animation-delay:.5s" onclick="showSkill(5)">
+        <span class="skill-icon">🎨</span>
+        <div class="skill-name">Graphic Design</div>
+        <div class="skill-level">PROFESSIONAL ✅</div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="90" style="width:0%"></div></div>
+        <p style="font-size:12px;color:var(--text2);margin-top:10px;">Photoshop, Flex, Visiting Card, Poster, Invitation</p>
+        <div style="margin-top:10px;font-size:10px;color:#00e5ff;font-family:Courier New,monospace;letter-spacing:.08em;">Click to see full topics →</div>
+      </div>
+
     </div>
   </div>
 </section>
+
+<script>
+var SKILLS=[{"icon": "🌐", "name": "Networking Basics", "level": "BEGINNER → INTERMEDIATE", "pct": 45, "weeks": [{"week": "Week 1 — Systech Class", "color": "#00e5ff", "topics": ["LAN (Local Area Network), MAN (Metropolitan), WAN (Wide Area Network)", "Transmission Media — Twisted Pair, Coaxial, Fiber Optic, Wireless", "NIC — Network Interface Card, MAC Address concept", "Hub vs Switch — Hub sends to all, Switch uses MAC table (smart)", "Cisco Router — connects different networks, uses IP addresses", "Cat6, Cat6a, Cat7, Cat8 cables — speeds and distances", "Fiber Optic — light pulses, very fast, long distance", "Straight-through cabling — PC to Switch, PC to Router", "Crossover cabling — PC to PC, Switch to Switch", "Topology Types — Bus, Star, Ring, Mesh, Hybrid", "System Communication — Packets, Source IP, Destination IP, Routing", "IP Addressing — IPv4, Subnet Mask, Default Gateway", "Windows Defender Firewall — inbound/outbound rules", "Windows Folder Sharing and Printer Sharing over LAN", "Remote Desktop — mstsc (Port 3389), msra (Remote Assistance)", "Commands: ipconfig, ipconfig /all, ping, getmac /v, arp -a, netstat -an, tracert, nslookup", "RJ45 Cable Crimping — T568B standard, hands-on with tester"]}]}, {"icon": "🖥️", "name": "Hardware & OS", "level": "HANDS-ON EXPERIENCE", "pct": 55, "weeks": [{"week": "Week 2 — Systech Class", "color": "#00ff88", "topics": ["Bytes Table — Bit, Byte, KB, MB, GB, TB, PB", "Windows 11 Minimum Requirements — CPU, RAM, Storage, TPM 2.0", "BIOS Setup — Boot order, UEFI mode, Secure Boot", "Boot Menu — USB boot selection for OS installation", "Disk Partitioning — Primary, Extended, Logical partitions", "Drive Letters — C:, D:, E: assignment and change", "Windows 11 Installation — step by step from bootable USB", "Driver Installation — devmgmt.msc, Device Manager", "Add-on Cards — VGA, HDMI, DisplayPort, Thunderbolt ports", "Graphics Card — discrete GPU, PCIe x16 slot", "Slots — PCI, DIMM (RAM), PCIe, NVMe M.2 SSD adapter", "Microprocessor — CPU, Clock Speed (GHz), Intel generations", "RAM Types — DDR3, DDR4, DDR5, DIMM vs SO-DIMM", "ROM — stores BIOS firmware permanently", "Storage — SATA HDD, SATA SSD, NVMe M.2, SATA cable", "SMPS and ATX — AC to DC conversion, power connectors", "PC Assembly — full build hands-on done", "OS Repair — bcdedit /set bootmenupolicy legacy/standard", "OS Repair — sfc /scannow, Safe Mode, Disable Auto Restart", "Windows 11 OS delete procedure"]}]}, {"icon": "🐧", "name": "Linux & Virtualization", "level": "HANDS-ON EXPERIENCE", "pct": 40, "weeks": [{"week": "Week 3 — Systech Class", "color": "#a78bfa", "topics": ["VMware Workstation — virtual machine creation and management", "Red Hat Linux 6 — installation in VMware VM", "Linux Partition Design — / (root), /boot, swap — enterprise layout", "Delete Linux OS and Virtual Machine — clean removal procedure", "GRUB Bootloader Error — fix using bootrec.exe /fixmbr, /fixboot, /rebuildbcd", "BIOS deep dive — advanced settings, POST process", "Acronis True Image — full OS backup and complete restore", "Bootable Pendrive using CMD — diskpart, format fat32, active", "Bootable Pendrive using Ventoy — multi-ISO support", "Troubleshooting No Display — GPU, cable, monitor checks", "Troubleshooting Hardware Problems — POST codes, devmgmt.msc", "Troubleshooting Software Problems — Safe Mode, Event Viewer, clean boot", "Data Recovery — Recuva software, deep scan, deleted file recovery"]}]}, {"icon": "🖧", "name": "Windows Server & Active Directory", "level": "HANDS-ON EXPERIENCE", "pct": 50, "weeks": [{"week": "Week 4 — Systech Class", "color": "#fb923c", "topics": ["Workgroup vs Domain — difference and use cases", "Desktop OS vs Server OS — key differences", "ADDS — Active Directory Domain Services overview", "Logical Structure — Forest, Tree, Domain, Organizational Unit (OU)", "Static IP Assignment — Server Manager NIC configuration", "Installing ADDS — Add Roles and Active Directory Domain Services", "Promoting Server to Domain Controller", "Configuring Client PC — joining domain with credentials", "Member Server configuration — joined domain but not DC", "Demote Domain Controller — graceful demotion process", "Remove ADDS — clean uninstall procedure", "Creating Domain User Accounts — ADUC, OU placement", "Changing Default Password Policy — min length, complexity, history", "Account Lockout Policy — threshold, duration, observation window", "Unlocking Locked User Account — ADUC Account tab", "Logon To — restricting user to specific workstations only", "Logon Hours — restricting access to business hours only", "Allow Logon Locally Policy — Group Policy configuration", "Share Level Permissions — Read, Change, Full Control", "Adding Mapped Drives — GPO Drive Maps, UNC path", "Access Based Enumeration — users see only permitted folders", "Local Profile — auto-created on first login", "Roaming Profile — follows user across machines via UNC path", "Home Folder — personal storage, mapped as drive letter", "FSRM Installation — File Server Resource Manager", "Quota Management — 100MB, 500MB, 1GB templates, warning alerts", "Assigning Different Quota Sizes — per user, per department", "File Screening — blocking .exe .bat .ps1 uploads to shares", "Storage Reports — Duplicate Files, Large Files, Files by Owner"]}]}, {"icon": "🔐", "name": "Cybersecurity & Pentesting", "level": "LEARNING — IN PROGRESS", "pct": 25, "weeks": [{"week": "Self-Study + TryHackMe", "color": "#f472b6", "topics": ["SQL Injection — login bypass concept, OR 1=1 injection", "SQL Injection — practiced in controlled lab environment", "OWASP Top 10 — web vulnerability categories", "Kali Linux — setup and basic tool usage (learning)", "Nmap — network scanning tool (learning)", "Burp Suite Community — HTTP traffic interception (learning)", "TryHackMe — Pre-Security path (in progress)", "Network Security Audit — using Windows CMD tools", "eJPT Certification — preparing, target August 2026"]}, {"week": "Coming Soon — Systech Next Classes", "color": "#64748b", "topics": ["Ethical Hacking methodology", "Kali Linux — full toolset", "Metasploit Framework", "Web Application Pentesting", "Network Pentesting", "Penetration Testing Core"]}]}, {"icon": "🎨", "name": "Graphic Design", "level": "PROFESSIONAL LEVEL", "pct": 90, "weeks": [{"week": "Jaswi Digital — Self-Employed (2022–Present)", "color": "#f59e0b", "topics": ["Adobe Photoshop — professional level, daily use", "Wedding Flex Banner design — 10x20, 10x30, 10x40 sizes", "Star Flex design — event and function banners", "Visiting Card design — business cards for local clients", "Invitation design — wedding and function invitations", "Vinyl Sticker design — shop and vehicle stickers", "Photo Frame design — custom photo arrangements", "Notice design — official and event notices", "Wall Poster design — large format printing", "Bill Book design — business billing templates", "Political Flex — party banners", "Temple Flex — festival and temple event banners", "YouTube Thumbnail design", "Social Media Post design", "Print coordination — courier and bus delivery", "Client management — order to delivery workflow", "Instagram marketing — @jaswindigital"]}]},
+  {
+    "icon":"🌐","name":"DHCP, WDS & Server Services","level":"HANDS-ON EXPERIENCE","pct":50,
+    "weeks":[
+      {"week":"Week 5 — Systech Class","color":"#22d3ee","topics":[
+        "Trust Relationship — connecting two separate AD forests",
+        "Forest Trust — bidirectional trust between two domains",
+        "Trust creation — New Trust Wizard, forest trust type",
+        "Trust verification — nltest command to verify trust",
+        "Windows Server Backup — feature installation",
+        "Full Server Backup — scheduling backup to local/network drive",
+        "ADDS Backup — backing up Active Directory database (ntds.dit)",
+        "Server Recovery — restoring from Windows Server Backup",
+        "ADDS Recovery — authoritative vs non-authoritative restore",
+        "DHCP Service — installation via Server Manager",
+        "DHCP Scope — IP range definition (start IP, end IP, subnet)",
+        "DHCP Lease Duration — how long IP assigned to device",
+        "DHCP Reservations — always same IP to specific device via MAC",
+        "DHCP MAC Filter — allow or deny specific MAC addresses",
+        "DHCP Backup — backing up DHCP database and settings",
+        "DHCP Restore — restoring DHCP from backup",
+        "WDS — Windows Deployment Services installation",
+        "WDS Configuration — PXE boot server setup",
+        "Boot Image — adding Windows PE boot image to WDS",
+        "Install Image — adding Windows OS install image to WDS",
+        "Network OS Deployment — booting client from network, installing OS without USB"
+      ]}
+    ]
+  }
+];
+
+function showSkill(i){
+  var sk=SKILLS[i];
+  document.getElementById('modal-icon').textContent=sk.icon;
+  document.getElementById('modal-title').textContent=sk.name;
+  document.getElementById('modal-level').textContent=sk.level;
+  document.getElementById('modal-pct').textContent=sk.pct+'%';
+  setTimeout(function(){document.getElementById('modal-bar').style.width=sk.pct+'%';},150);
+  var weekIcons=['📚','🛠️','⚡','🎯','🔥','⭐'];
+  var groupDefs=[{l:'Core Concepts',ic:'🧠'},{l:'Hands-on Practice',ic:'🔧'},{l:'Tools & Commands',ic:'💻'},{l:'Advanced Topics',ic:'🚀'}];
+  function groupTopics(topics){
+    var n=Math.min(3,Math.ceil(topics.length/3));
+    var groups=[];
+    for(var i=0;i<topics.length;i+=n){
+      var idx2=Math.floor(i/n);
+      groups.push({label:groupDefs[idx2]?groupDefs[idx2].l:'More Topics',icon:groupDefs[idx2]?groupDefs[idx2].ic:'📌',items:topics.slice(i,i+n)});
+    }
+    return groups;
+  }
+  var body='';
+  sk.weeks.forEach(function(w,wi){
+    var groups=groupTopics(w.topics);
+    var c=w.color;
+    body+='<div style="margin-bottom:18px;opacity:0;animation:vsSlideIn .4s ease '+(wi*0.12)+'s forwards;">';
+    body+='<div style="display:flex;align-items:center;gap:10px;padding:11px 16px;background:'+c+'22;border-radius:10px 10px 0 0;border-left:3px solid '+c+';">';
+    body+='<span style="font-size:16px;">'+(weekIcons[wi]||'📌')+'</span>';
+    body+='<span style="font-size:13px;font-weight:700;color:'+c+'">'+w.week+'</span>';
+    body+='<span style="margin-left:auto;font-size:10px;padding:3px 9px;border-radius:99px;background:'+c+'33;color:'+c+'">'+w.topics.length+' topics</span>';
+    body+='</div>';
+    body+='<div style="border:1px solid '+c+'44;border-top:none;border-radius:0 0 10px 10px;overflow:hidden;">';
+    groups.forEach(function(g,gi){
+      var dly=(wi*0.12)+(gi*0.07);
+      body+='<div style="border-top:'+(gi===0?'none':'1px solid '+c+'33')+';opacity:0;animation:vsFadeUp .35s ease '+dly+'s forwards;">';
+      body+='<div class="vsahead" onclick="vsToggle(this)" style="display:flex;align-items:center;gap:8px;padding:10px 16px;cursor:pointer;background:'+c+'11;transition:background .2s;">';
+      body+='<span style="font-size:13px;">'+g.icon+'</span>';
+      body+='<span style="font-size:12px;font-weight:600;color:'+c+'">'+g.label+'</span>';
+      body+='<span style="margin-left:auto;font-size:10px;background:'+c+'22;color:'+c+';padding:1px 7px;border-radius:99px;">'+g.items.length+'</span>';
+      body+='<span class="vsarr" style="font-size:10px;color:'+c+';transition:transform .25s;margin-left:4px;">▼</span>';
+      body+='</div>';
+      body+='<div class="vsbody" style="overflow:hidden;max-height:0;transition:max-height .38s cubic-bezier(.4,0,.2,1);">';
+      body+='<div style="padding:8px 12px;display:flex;flex-direction:column;gap:5px;background:rgba(0,0,0,0.18);">';
+      g.items.forEach(function(t,ti){
+        body+='<div style="display:flex;align-items:flex-start;gap:8px;padding:7px 12px;background:rgba(255,255,255,0.04);border-radius:6px;border-left:2px solid '+c+'66;opacity:0;animation:vsFadeUp .3s ease '+(dly+0.1+ti*0.03)+'s forwards;">';
+        body+='<span style="color:'+c+';font-size:10px;margin-top:3px;flex-shrink:0;">&#9658;</span>';
+        body+='<span style="font-size:12px;color:#c8d8e8;line-height:1.55;">'+t+'</span></div>';
+      });
+      body+='</div></div></div>';
+    });
+    body+='</div></div>';
+  });
+  document.getElementById('modal-body').innerHTML=body;
+  setTimeout(function(){
+    var first=document.querySelector('.vsahead');
+    if(first) vsToggle(first);
+  },300);
+  var m=document.getElementById('skill-modal');
+  m.style.display='flex';
+  document.body.style.overflow='hidden';
+}
+function vsToggle(head){
+  var body=head.nextElementSibling;
+  var arr=head.querySelector('.vsarr');
+  var open=body.style.maxHeight&&body.style.maxHeight!=='0px';
+  if(open){body.style.maxHeight='0px';if(arr)arr.style.transform='rotate(0deg)';}
+  else{body.style.maxHeight=body.scrollHeight+300+'px';if(arr)arr.style.transform='rotate(180deg)';}
+}
+function closeModal(){
+  document.getElementById('skill-modal').style.display='none';
+  document.getElementById('modal-bar').style.width='0%';
+  document.body.style.overflow='';
+}
+
+function closeSkillModal(e){
+  if(e.target===document.getElementById('skill-modal')) closeModal();
+}
+
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+</script>
 
 <!-- PROJECTS -->
 <section id="projects">
@@ -499,6 +646,47 @@ footer span{color:var(--cyan)}
           <li>Configured share permissions, mapped drives & access-based enumeration</li>
           <li>Set up roaming profiles, home folders & local profiles</li>
           <li>Installed FSRM — configured quota management, file screening & storage reports</li>
+        </ul>
+        <div class="project-links">
+          <a href="https://github.com/vengat2003/Vengatesan-cybersecurity-portfolio" target="_blank" class="project-link">&#9671; GitHub</a>
+          <a href="#learning" class="project-link green">&#9658; Done!</a>
+        </div>
+      </div>
+
+
+      <div class="project-card reveal" style="animation-delay:.9s">
+        <div class="project-num">PROJECT_10</div>
+        <div class="project-title">Trust Relationship & Server Backup Lab</div>
+        <div class="project-tags">
+          <span class="project-tag">Forest Trust</span>
+          <span class="project-tag">Server Backup</span>
+          <span class="project-tag">ADDS Recovery</span>
+        </div>
+        <ul class="project-points">
+          <li>Created Forest Trust between two AD domains — bidirectional trust configured</li>
+          <li>Configured Windows Server Backup — full server backup scheduled</li>
+          <li>ADDS backup configured — Active Directory recovery tested</li>
+          <li>Performed full server recovery from backup — data integrity verified</li>
+        </ul>
+        <div class="project-links">
+          <a href="https://github.com/vengat2003/Vengatesan-cybersecurity-portfolio" target="_blank" class="project-link">&#9671; GitHub</a>
+          <a href="#learning" class="project-link green">&#9658; Done!</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal" style="animation-delay:1s">
+        <div class="project-num">PROJECT_11</div>
+        <div class="project-title">DHCP Server & WDS Deployment Lab</div>
+        <div class="project-tags">
+          <span class="project-tag">DHCP</span>
+          <span class="project-tag">WDS</span>
+          <span class="project-tag">OS Deployment</span>
+        </div>
+        <ul class="project-points">
+          <li>Installed DHCP — created scope, reservations, MAC filter configured</li>
+          <li>DHCP backup and restore tested — configuration preserved</li>
+          <li>Installed WDS — configured boot image and install image</li>
+          <li>Deployed Windows OS over network to client PC — zero-touch installation</li>
         </ul>
         <div class="project-links">
           <a href="https://github.com/vengat2003/Vengatesan-cybersecurity-portfolio" target="_blank" class="project-link">&#9671; GitHub</a>
