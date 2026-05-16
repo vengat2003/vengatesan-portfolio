@@ -385,6 +385,67 @@ var SKILLS=[{"icon": "🌐", "name": "Networking Basics", "level": "BEGINNER →
       ]}
     ]
   }
+,
+  {
+    "icon":"🏛️","name":"Advanced Active Directory","level":"HANDS-ON EXPERIENCE","pct":55,
+    "weeks":[
+      {"week":"Week 6 — Systech Class","color":"#e879f9","topics":[
+        "ADC — Additional Domain Controller for high availability",
+        "ADC configuration — second DC in same domain, replication setup",
+        "FSMO Roles — 5 special roles in Active Directory",
+        "PDC Emulator — time sync, password changes, Group Policy",
+        "RID Master — assigns Relative IDs for object creation",
+        "Infrastructure Master — cross-domain object reference updates",
+        "Schema Master — AD schema changes (forest-wide, only 1)",
+        "Domain Naming Master — add/remove domains in forest (only 1)",
+        "Transfer of Roles — graceful handover when DC is alive (ntdsutil)",
+        "Seizing of Roles — forceful takeover when DC is dead/unavailable",
+        "Child Domain — subdomain under parent (trichy.company.com)",
+        "Child Domain Controller configuration — automatic two-way trust",
+        "New Domain Tree — different namespace in same forest",
+        "Global Catalog Server — stores all objects from all domains",
+        "Global Catalog — enables universal group membership, cross-domain search",
+        "RODC — Read-Only Domain Controller for branch offices",
+        "RODC — no writes, cached credentials only, secure",
+        "Pre-create RODC account — staged installation method",
+        "IFM — Install From Media — offline DC promotion without network",
+        "AD Sites — represent physical network locations",
+        "AD Site Links — control replication schedule between sites",
+        "Subnets — assign IP ranges to AD sites"
+      ]}
+    ]
+  }
+,
+  {
+    "icon":"⚙️","name":"Group Policy & OU Management","level":"HANDS-ON EXPERIENCE","pct":55,
+    "weeks":[
+      {"week":"Week 7 — Systech Class","color":"#34d399","topics":[
+        "Organizational Unit (OU) — logical container for users and computers",
+        "Creating OUs — IT Dept, HR Dept, Servers, structured hierarchy",
+        "Delegating Control — giving OU-level admin to specific user without full Domain Admin",
+        "Security Groups — for permissions and resource access",
+        "Distribution Groups — for email distribution lists",
+        "Group Policy Object (GPO) — policy container applied to AD objects",
+        "GPO at OU Level — applies only to users/computers in that OU",
+        "GPO at Domain Level — applies to all users and computers in domain",
+        "GPO at Site Level — applies based on physical AD site location",
+        "GPO Modelling — what-if simulation before applying policy",
+        "Software Deployment Policy — push MSI packages to computers via GPO",
+        "Logon Scripts — run scripts when user logs in",
+        "Logoff Scripts — run scripts when user logs off",
+        "Startup Scripts — run scripts when computer starts",
+        "Shutdown Scripts — run scripts when computer shuts down",
+        "Folder Redirection — redirect Desktop/Documents to server share",
+        "Auditing Policy — track login events, file access, changes",
+        "Preferences — more flexible settings than policies",
+        "Item Level Targeting — apply preferences to specific users/computers only",
+        "Granting Domain Admin Permission — elevate specific user to domain admin level",
+        "GPO Inheritance — child OUs inherit parent GPO by default",
+        "Block Inheritance — prevent parent GPO from applying to child OU",
+        "Enforce GPO — force GPO even if child blocks inheritance"
+      ]}
+    ]
+  }
 ];
 
 function showSkill(i){
@@ -687,6 +748,90 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal()
           <li>DHCP backup and restore tested — configuration preserved</li>
           <li>Installed WDS — configured boot image and install image</li>
           <li>Deployed Windows OS over network to client PC — zero-touch installation</li>
+        </ul>
+        <div class="project-links">
+          <a href="https://github.com/vengat2003/Vengatesan-cybersecurity-portfolio" target="_blank" class="project-link">&#9671; GitHub</a>
+          <a href="#learning" class="project-link green">&#9658; Done!</a>
+        </div>
+      </div>
+
+
+      <div class="project-card reveal" style="animation-delay:1.1s">
+        <div class="project-num">PROJECT_12</div>
+        <div class="project-title">Additional DC & FSMO Roles Lab</div>
+        <div class="project-tags">
+          <span class="project-tag">ADC</span>
+          <span class="project-tag">FSMO Roles</span>
+          <span class="project-tag">High Availability</span>
+        </div>
+        <ul class="project-points">
+          <li>Configured Additional Domain Controller (ADC) — backup DC for high availability</li>
+          <li>Identified all 5 FSMO roles — PDC Emulator, RID Master, Infrastructure, Schema, Domain Naming</li>
+          <li>Transferred FSMO roles gracefully between DCs using ntdsutil</li>
+          <li>Seized FSMO roles forcefully — simulated DC failure recovery</li>
+        </ul>
+        <div class="project-links">
+          <a href="https://github.com/vengat2003/Vengatesan-cybersecurity-portfolio" target="_blank" class="project-link">&#9671; GitHub</a>
+          <a href="#learning" class="project-link green">&#9658; Done!</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal" style="animation-delay:1.2s">
+        <div class="project-num">PROJECT_13</div>
+        <div class="project-title">Child Domain, RODC & AD Sites Lab</div>
+        <div class="project-tags">
+          <span class="project-tag">Child Domain</span>
+          <span class="project-tag">RODC</span>
+          <span class="project-tag">Global Catalog</span>
+        </div>
+        <ul class="project-points">
+          <li>Configured Child Domain Controller — trichy.company.com under parent domain</li>
+          <li>Created new Domain Tree in existing Forest — separate namespace same forest</li>
+          <li>Configured Global Catalog Server — all domain objects searchable</li>
+          <li>Pre-created RODC account — configured Read-Only DC using IFM method</li>
+          <li>Created AD Sites and Site Links — controlled replication between locations</li>
+        </ul>
+        <div class="project-links">
+          <a href="https://github.com/vengat2003/Vengatesan-cybersecurity-portfolio" target="_blank" class="project-link">&#9671; GitHub</a>
+          <a href="#learning" class="project-link green">&#9658; Done!</a>
+        </div>
+      </div>
+
+
+      <div class="project-card reveal" style="animation-delay:1.3s">
+        <div class="project-num">PROJECT_14</div>
+        <div class="project-title">Organizational Units & Group Management Lab</div>
+        <div class="project-tags">
+          <span class="project-tag">OU</span>
+          <span class="project-tag">Delegation</span>
+          <span class="project-tag">Groups</span>
+        </div>
+        <ul class="project-points">
+          <li>Created Organizational Units — IT Dept, HR Dept, Servers OUs structured</li>
+          <li>Delegated Control to user — OU-level admin without full Domain Admin rights</li>
+          <li>Created Security Groups and Distribution Groups — members assigned</li>
+          <li>Granted Domain Administrator level permission to specific user</li>
+        </ul>
+        <div class="project-links">
+          <a href="https://github.com/vengat2003/Vengatesan-cybersecurity-portfolio" target="_blank" class="project-link">&#9671; GitHub</a>
+          <a href="#learning" class="project-link green">&#9658; Done!</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal" style="animation-delay:1.4s">
+        <div class="project-num">PROJECT_15</div>
+        <div class="project-title">Group Policy Objects (GPO) — Full Configuration Lab</div>
+        <div class="project-tags">
+          <span class="project-tag">GPO</span>
+          <span class="project-tag">Software Deploy</span>
+          <span class="project-tag">Auditing</span>
+        </div>
+        <ul class="project-points">
+          <li>Applied GPO at OU, Domain and Site levels — scope and inheritance tested</li>
+          <li>Deployed software via GPO — MSI package pushed to all domain computers</li>
+          <li>Configured logon/logoff scripts, folder redirection to server share</li>
+          <li>Applied Auditing Policy — tracked login events and file access</li>
+          <li>Configured Preferences with Item Level Targeting — applied to specific users only</li>
         </ul>
         <div class="project-links">
           <a href="https://github.com/vengat2003/Vengatesan-cybersecurity-portfolio" target="_blank" class="project-link">&#9671; GitHub</a>
